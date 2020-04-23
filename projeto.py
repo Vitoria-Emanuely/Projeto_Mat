@@ -2,10 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #Início
-a = 0.0
+a = 0
 
 #Fim
-b = 1.0
+b = 1
 
 #Números de pontos
 n = 5
