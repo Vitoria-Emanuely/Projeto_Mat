@@ -8,7 +8,7 @@ a = 0
 b = 1
 
 #Números de pontos
-n = 5
+n = 5.0
 
 #Cria uma malha com os parâmetros (inicio, fim, n de "divisões" na malha)
 x = np.linspace(a, b, n)
