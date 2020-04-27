@@ -2,10 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #Início
-a = 0
+a = 0.0
 
 #Fim
-b = 2
+b = 2.0
 
 #Números de pontos
 n = 5
@@ -29,13 +29,13 @@ Y = np.zeros(n + 2)
 
 #Valores fixos
 #Contorno a esquerda
-X[0, 0] = K / 2 ** deltax
-X[0, 2] = -K / (2 ** deltax)
+X[0, 0] = K / 2.0 * deltax
+X[0, 2] = -K / (2.0 * deltax)
 Y[0] = 127.324
 
 #Contorno a direita
-X[n + 1, n + 1] = - K / (2 * deltax)
-X[n + 1, n - 1] = K / (2 ** deltax)
+X[n + 1, n + 1] = - K / (2.0 * deltax)
+X[n + 1, n - 1] = K / (2.0 * deltax)
 Y[n + 1] = - h * Tinf
 
 #Preenche as matrizes X e Y
