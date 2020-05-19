@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
 #Início
 a = 0.0
@@ -25,25 +26,27 @@ lambdaa = (alfa * deltat) / deltax ** 2
 m = 8
 
 #Cria uma matriz de zeros NXN
-A = np.zeros((n - 1, n - 1))
-B = np.zeros(n - 1)
+A = np.zeros((n - 2, n - 2))
+B = np.zeros(n - 2)
 
 #Preenche a matriz fixa A
 A[0, 0] = -(2.0 * lambdaa + 1.0)
 A[0, 1] = lambdaa
 A[1, 0] = lambdaa
-A[n - 2, n - 2] = -(2.0 * lambdaa + 1.0)
+A[n - 3, n - 3] = -(2.0 * lambdaa + 1.0)
+A[n - 3, n - 4] = lambdaa
+A[n - 4, n - 3] = lambdaa
 
-for i in np.arange(1, n - 2):
+for i in np.arange(1, n - 3):
     A[i, i] = -(2.0 * lambdaa + 1.0)
     A[i, i + 1] = lambdaa
     A[i + 1, i] = lambdaa
 
 #Matriz B: Primeiro passo de tempo j=0
 B[0] = - 0.0 - lambdaa * 100.0
-B[n - 2] = - 0.0 - lambdaa * 50.0
+B[n - 3] = - 0.0 - lambdaa * 50.0
 
-for i in np.arange(1, n - 2):
+for i in np.arange(1, n - 3):
     B[i] = 0.0
 
 #Resolve a matriz linear
@@ -53,15 +56,24 @@ F = C
 #Matriz B: Próximos passos de tempo j=1 até j=m
 for j in np.arange(1, m):
     B[0] = - C[0] - lambdaa * 100.0
-    B[n - 2] = - C[n - 2] - lambdaa * 50.0
+    B[n - 3] = - C[n - 3] - lambdaa * 50.0
 
-    for i in np.arange(1, n - 2):
+    for i in np.arange(1, n - 3):
         B[i] = - C[i]
     C = np.linalg.solve(A,B)   
-    F = np.vstack((F, C))
+    #Insere na matriz F as matrizes salvas temporariamente em C
+    F = np.vstack([F, C])
 
 print(F)
 
-#Gera o gráfico (arredonda as casas decimais)
-# plt.plot(x, m)
-# plt.show()
+#Gera o DataFrame 
+x = []
+for i in np.arange(1, n - 1):
+    x.append(i)
+
+y = []
+for i in np.arange(0, m):
+    y.append(i)
+
+df = pd.DataFrame(F, index=y, columns=x)
+print(df)
