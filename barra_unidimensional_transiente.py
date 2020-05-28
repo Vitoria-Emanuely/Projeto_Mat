@@ -9,7 +9,7 @@ a = 0.0
 b = 10.0
 
 #Números de pontos (linha x, em função de i)
-n = 10
+n = 50
 
 #Cria uma malha com os parâmetros (inicio, fim, n de "divisões" na malha)
 x = np.linspace(a, b, n)
@@ -18,12 +18,12 @@ deltax = (b - a) / (n - 1)
 
 #Parâmetros da equação lambda
 alfa = 1.0
-deltat = 0.5
+deltat = 1.5
 
 lambdaa = (alfa * deltat) / deltax ** 2
 
 #Número de pontos (linha y, em função de j)
-m = 8
+m = 5
 
 #Cria uma matriz de zeros NXN
 A = np.zeros((n - 2, n - 2))
@@ -67,13 +67,30 @@ for j in np.arange(1, m):
 print(F)
 
 #Gera o DataFrame 
-x = []
+z = []
 for i in np.arange(1, n - 1):
-    x.append(i)
+    z.append(i)
 
 y = []
 for i in np.arange(0, m):
     y.append(i)
 
-df = pd.DataFrame(F, index=y, columns=x)
+df = pd.DataFrame(F, index=y, columns=z)
 print(df)
+
+#Preenche a matriz F com 100°C e 50°C
+K = np.zeros((m, 1))
+for i in np.arange(0, m):
+    K[i] = 50.0
+
+F = np.hstack([F, K]) 
+
+for i in np.arange(0, m):
+    K[i] = 100.0
+
+F = np.hstack([K, F])     
+
+#Gera o gráfico de linhas
+for i in range(m):
+	plt.plot(x[0:n], F[i])
+plt.show()
