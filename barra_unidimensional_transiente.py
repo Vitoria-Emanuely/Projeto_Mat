@@ -91,6 +91,10 @@ for i in np.arange(0, m):
 F = np.hstack([K, F])     
 
 #Gera o gráfico de linhas
+fig = plt.figure(1)
+ax = fig.add_subplot(111)
 for i in range(m):
-	plt.plot(x[0:n], F[i])
+	ax.plot(x[0:n], F[i])
+ax.set_xlabel('Passos de tempo')   
+ax.set_ylabel('Temperatura') 
 plt.show()
