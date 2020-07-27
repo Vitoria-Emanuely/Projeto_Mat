@@ -58,8 +58,6 @@ for i in np.arange(0, n - 1):
     B[i, i] = omega
 
 #Preenche a matriz fixa C
-# C[n - 3, n - 2] = - omega
-# C[n - 2, n - 3] = - omega
 C[n - 2, n - 2] = 1.0 - 4.0 * omega
 
 for i in np.arange(0, n - 2):
