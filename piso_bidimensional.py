@@ -112,27 +112,30 @@ for k in range(nt):
 
 #Preenche a matriz Theta para condição inicial, k = t = 0
 T = np.zeros(((m - 1) * (n - 1), 1))
+T1 = np.zeros(((m - 1) * (n - 1), 1))
+T2 = np.zeros(((m - 1) * (n - 1), 1))
+
 
 #Gera a primeira matriz (CE e CD)
 for j in np.arange(0, m - 1):
   i, k = j * (n - 1), (j + 1) * (n - 1) - 1
-  Theta[i] = CE[j + 1,0] + CE[j + 1,1]
-  Theta[k] = CD[j + 1,0] + CD[j + 1,1]
+  T1[i] = CE[j + 1,0] + CE[j + 1,1]
+  T1[k] = CD[j + 1,0] + CD[j + 1,1]
 
 #Gera a segunda matriz (CI e CS)
-for j in np.arange(0, m):
+for j in np.arange(0, m - 1):
   i, k = (j + 1) * (n - 1) - 1, j * (n - 1)
-  Theta[i] = CI[j + 0,0] + CI[j + 0,1]
-  Theta[k] = CS[j + 0,0] + CS[j + 0,1]
+  T2[i] = CI[j + 1,0] + CI[j + 1,1]
+  T2[k] = CS[j + 1,0] + CS[j + 1,1]
 
 
+#Cria a matriz Theta 
+# for i in np.arange():
+#     T[i] = omega * T1[i] + omega * T2[i]
 
+T = omega * T1 + omega * T2
 
-
-# for j in np.arange(0, m - 2):
-#     for i in np.arange(0, n - 2):
-#         k = i + j * (n - 1)
-#         Temp[k] = np.exp( - (x[i + 1] ** 2 + y[j + 1] ** 2) / L)
+print(T)
 
 
 
