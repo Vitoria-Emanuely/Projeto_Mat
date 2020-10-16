@@ -22,7 +22,7 @@ nt = 5
 tfinal = (nt - 1) * deltat
 
 #Números de pontos (linha x, em função de i)
-n = 50
+n = 5
 
 #Números de pontos (linha y, em função de j), condição para a existência de m
 if C == L:
@@ -143,9 +143,10 @@ for p in np.arange(2, nt):
 
 ###Gráfico de Isolinhas###
 #Gera matrizes para montar o gráfico de isolinhas
-X0, Y0 = np.meshgrid(x, y) 
-X = X0.transpose()
-Y = Y0.transpose()
+# X0, Y0 = np.meshgrid(x, y) 
+# X = X0.transpose()
+# Y = Y0.transpose()
+X, Y = np.meshgrid(x, y) 
 
 #Gera a matriz S (resultados das coordenadas de X e Y)
 S = np.zeros((n + 1, m + 1))
@@ -172,9 +173,13 @@ for j in range(m + 1):
             S[i, m] = CS[i, nt - 1] 
     v = (j * (n - 1))
         
+print(resultado)
+        
 #Gera o gráfico de isolinhas    
-map=plt.contourf(X,Y,S,cmap='jet')
+fig, ax = plt.subplots()
+Z = np.flip(S.transpose(), 0)
+map = ax.imshow(Z, interpolation='bilinear', cmap='jet',  extent = [x[0], x[n], y[0], y[m]])
 cb=plt.colorbar(map)
 cb.set_label("Temperatura (R)")
-plt.title('Para o último passo de tempo (t = %.2f)' %(tfinal))
+plt.title('t = %.2f' %(tfinal))
 plt.show()
